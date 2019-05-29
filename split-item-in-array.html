@@ -11,21 +11,42 @@
 <body>
     <div class="container">
         <div class="row">
-            <div id="user-input"></div>
+
+            <!-- Write to HTML -->
+
+            <!-- user's input -->
+            <div id="user-input"></div> 
+            <!-- list of possible choices -->
             <div id="array"></div>
+            <!-- computer randomly picks a choice -->
             <div id="random-pick"></div>
+            <!-- the choice splitted into a new array -->
             <div id="split-index"></div>
+            <!-- if the user's input in range of the new array -->
             <div id="range"></div>
+            <!-- display the incorrect letter pressed -->
             <div id="wrong-letter"></div>
+            <!-- amount of times correct -->
+            <div id="correct"></div>
+            <!-- amount of times incorrect -->
+            <div id="incorrect"></div>
         </div>
     </div>
 
 
     <script type="text/javascript">
 
+        // Global, create an empty array to put wrong letters guessed
         var wrongLetter = [];
 
+        // Global, create variables to hold score
+        var correct = 0;
+        var incorrect = 0;
+
+        // Global, create a function for when the user presses a key, start this function
         document.onkeyup = function (e) {
+
+            // define a list of possible choices
             var rps = ["rock", "paper", "scissors"];
             var userInput = e.key;
 
@@ -34,32 +55,47 @@
             console.log("ARRAY: " + "[" + rps + "]");
             document.getElementById("array").innerHTML = "ARRAY: [" + rps + "]";
 
-
+            // let computer randomize the array of possible choices
             var computerInput = rps[Math.floor(Math.random() * rps.length)];
             console.log("RANDOM PICK: " + computerInput);
             document.getElementById("random-pick").innerHTML = "RANDOM PICK: " + computerInput;
 
+            // split the computer's choice into an array
             var split = computerInput.split("");
             console.log("SPLIT INDEX: " + split);
             document.getElementById("split-index").innerHTML = "SPLIT INDEX: " + split;
 
+            // loop through this new array
             for (var i = 0; i < split.length; i++) {
+
+                // if user's input is out of range:
                 if (split[i].indexOf(userInput) === -1) {
                     console.log("OUT OF RANGE: " + userInput + " != " + "[" + split[i] + "]");
                     document.getElementById("range").innerHTML = "OUT OF RANGE: " + userInput + " != [" + split[i] + "]";
 
+                    // add user's input into wrong letters guessed
                     wrongLetter.push(userInput);
                     console.log(wrongLetter);
                     document.getElementById("wrong-letter").innerHTML = "[" + wrongLetter + "]";
+                
+                    // add to incorrect
+                    incorrect++;
+                    document.getElementById("incorrect").innerHTML = "Incorrect: " + incorrect;
 
-                } else {
+                // if user's input is in range:
+                } else if (split[i].indexOf(userInput !== -1)) {
+
+                
                     console.log("IN RANGE: " + userInput + " = " + "[" + split[i] + "]");
                     document.getElementById("range").innerHTML = "IN RANGE: " + userInput + " = [" + split[i] + "]";
 
+                    // add to correct
+                    correct++;
+                    document.getElementById("correct").innerHTML = "Correct: " + correct;
                 }
             }
         }
-
+        
     </script>
 </body>
 
