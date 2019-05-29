@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div id="user-input"></div>
+            <div id="array"></div>
+            <div id="random-pick"></div>
+            <div id="split-index"></div>
+            <div id="range"></div>
+            <div id="wrong-letter"></div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        var wrongLetter = [];
+
+        document.onkeyup = function (e) {
+            var rps = ["rock", "paper", "scissors"];
+            var userInput = e.key;
+
+            console.log("\nUSER INPUT: " + userInput);
+            document.getElementById("user-input").innerHTML = "USER INPUT: " + userInput;
+            console.log("ARRAY: " + "[" + rps + "]");
+            document.getElementById("array").innerHTML = "ARRAY: [" + rps + "]";
+
+
+            var computerInput = rps[Math.floor(Math.random() * rps.length)];
+            console.log("RANDOM PICK: " + computerInput);
+            document.getElementById("random-pick").innerHTML = "RANDOM PICK: " + computerInput;
+
+            var split = computerInput.split("");
+            console.log("SPLIT INDEX: " + split);
+            document.getElementById("split-index").innerHTML = "SPLIT INDEX: " + split;
+
+            for (var i = 0; i < split.length; i++) {
+                if (split[i].indexOf(userInput) === -1) {
+                    console.log("OUT OF RANGE: " + userInput + " != " + "[" + split[i] + "]");
+                    document.getElementById("range").innerHTML = "OUT OF RANGE: " + userInput + " != [" + split[i] + "]";
+
+                    wrongLetter.push(userInput);
+                    console.log(wrongLetter);
+                    document.getElementById("wrong-letter").innerHTML = "[" + wrongLetter + "]";
+
+                } else {
+                    console.log("IN RANGE: " + userInput + " = " + "[" + split[i] + "]");
+                    document.getElementById("range").innerHTML = "IN RANGE: " + userInput + " = [" + split[i] + "]";
+
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
