@@ -15,6 +15,7 @@
       var blankArr = [];
       var wrongArr = [];
       var trys = 12;
+      var correct = 0;
 
       // // 3
       // console.log(animals.length);
@@ -45,49 +46,61 @@
 
       document.onkeyup = function(game) {
         var userInput = game.key;
-        console.log('######## userInput #########');
-        console.log(`userInput: ${userInput}`);
-        console.log(`typeof userInput: ${userInput} = ${typeof userInput}`);
+        // console.log('0 - ######## userInput #########');
+        // console.log(`userInput: ${userInput}`);
+        // console.log(`typeof userInput: ${userInput} = ${typeof userInput}`);
         var i = 0;
         console.log(`variable i: ${i}`);
         console.log(`typeof i: ${i} = ${typeof i}`);
         // console.log(`var bool: ${bool}`);
         // console.log(`typeof bool: ${bool} = ${typeof bool}`);
-        console.log('######### animals.forEach(function(i, userInput, bool) { #########');
+        var bool = false;
 
-        animals.forEach(function(i, item, bool) { //when i put userinput in here, check animals array
-          var bool = false;
-          console.log(`var bool: ${bool}`);
-          console.log(`typeof: ${typeof bool}`);
-          console.log(`Function(item): ${item}`);
-          console.log(`typeof item: ${item} = ${typeof item}`);
-          console.log(`Function(i): ${i}`);
-          console.log(`typeof var i: ${i} = ${typeof i}`);
+        animals.forEach(function(i, item) { // when i put userinput in here, check animals array
+          console.log('1 - ######### animals.forEach(function(i, item, bool) {');
+          console.log(`function(i): ${i} | typeof function(i) = ${typeof i}`);
+          console.log(`function(item): ${item} | typeof function(item): ${typeof item}`);
+          console.log(`typeof item: ${typeof item}`);
+          console.log(`var bool: ${bool} | typeof: ${typeof bool}`);
+
+
           // console.log(`This is bool now: ${bool}`);
           // console.log(`typeof bool: ${bool} = ${typeof bool}`);
-          i++;
-          console.log(`********** Checking If/else **********`);
-          if (userInput ===  animals[item]) {
-            console.log(`${userInput} = ${animals[item]} MATCH!`)
+          console.log(`2 - ********** Checking If/else **********`);
+          if (userInput ===  animals[item] && blankArr.indexOf(animals[item]) === -1) {
+            console.log(`======= MATCH! =======`);
+            console.log(`UserInput: ${userInput} == animals[item]: ${animals[item]} `)
             console.log(`typeof ${typeof userInput} = typeof ${typeof animals[item]}`);
             blankArr.push(userInput);
             console.log(`blankArr = ${blankArr}`);
             var bool = true;
             console.log('----------------');
-            console.log(`${bool}`);
-            console.log(`${typeof bool}`);
-
-          }
-          if (bool === false && animals.indexOf(userInput) === -1) {
-            console.log(`${userInput} != ${animals[item]}`);
+          };
+          if (bool === undefined && blankArr.indexOf(userInput) === -1 && wrongArr.indexOf(userInput) === -1) {
+            console.log(`======== WRONG =======`);
+            console.log(`wrongArr.indexOf(animals[i]): ${wrongArr.indexOf(animals[item])}`);
+            console.log(`${userInput} != ${animals[i]}`);
             trys--;
             console.log(`Trys left: ${trys}`);
             wrongArr.push(userInput);
             console.log(`wrongArr = ${wrongArr}`);
             console.log('----------------');
 
+
           }
+          
+          console.log(`User Input = ${userInput}`);
+          console.log(`bool / blankArr.indexOf(animals[i]) / wrongArr.indexOf(userInput) || ${bool} / ${blankArr.indexOf(userInput)} / ${wrongArr.indexOf(userInput)}`);
+
+          console.log(`blankArr = ${blankArr}`);
+          console.log(`wrongArr = ${wrongArr}`);
+          console.log(`trys = ${trys}`);
+          console.log(`correct = ${correct}`);
+
+
+
       });
+
     };
     
 
