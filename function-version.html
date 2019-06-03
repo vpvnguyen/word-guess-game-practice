@@ -8,6 +8,11 @@
 
     <h1>Open the console to see the magic!</h1>
     <div id="theWord"></div>
+    <div id="wrong"></div>
+    <div id="trys"></div>
+    <div id="win"></div>
+  
+
     <script type="text/javascript">
 
       // Fill in the question marks with what the output will be.
@@ -17,6 +22,7 @@
       var wrongArr = [];
       var allWords = [];
       var trys = 12;
+      var win = 0;
 
       // Create blank spaces based on length of array
       var answerDisplay = function() {
@@ -43,23 +49,6 @@
             console.log(`======= MATCH! =======\n`);
           }
         });
-        console.log(`${bool}`);
-
-					// //Check where the correct letter is located on the word, then add to html
-					// if(correctLetter) {
-					// 	for ( var i = 0; i < numBlanks; i++) {
-					// 		if(currentWord[i] == letter) {
-					// 			answerDisplay[i] = letter;
-					// 		}
-					// 	}
-					// }
-
-					// //If the letter isn't part of the word
-					// else {
-					// 	wrongLtrs.push(letter);
-					// 	guessesLeft--
-					// }
-
         if (bool === true) {
           for (var i = 0; i < array.length; i++) {
             console.log(array[i] + userInput);
@@ -71,9 +60,17 @@
         } else if (wrongArr.indexOf(userInput) === -1) {
           wrongArr.push(userInput);
           trys--;
+          document.getElementById('wrong').innerHTML = `wrongArr: ${wrongArr}`;
+          document.getElementById('trys').innerHTML = `Trys Left: ${trys}`;
           console.log(`wrongArr = ${wrongArr}`);
           console.log(`trys left = ${trys}`);
         }
+
+        // var scoreSystem = function (score) {
+        //     if (trys === 0) {
+        //       alert('lose');
+        //   }
+        // }
     };
     
 
