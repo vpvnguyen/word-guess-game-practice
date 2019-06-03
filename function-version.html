@@ -7,6 +7,8 @@
   <body>
 
     <h1>Open the console to see the magic!</h1>
+    <div id="random"></div>
+    <div id="array"></div>
     <div id="theWord"></div>
     <div id="wrong"></div>
     <div id="trys"></div>
@@ -16,13 +18,21 @@
     <script type="text/javascript">
 
       // Fill in the question marks with what the output will be.
-      var currentWord = ["asda"];
-      var array = ["a", "s", "d", "a"];
+      var mainArr = ['pikachu', 'charmander', 'bulbasaur', 'squirtle', 'mewtwo'];
       var blankArr = [];
       var wrongArr = [];
-      var allWords = [];
       var trys = 12;
       var win = 0;
+
+      // let computer randomize the array of possible choices
+      var randomArr = mainArr[Math.floor(Math.random() * mainArr.length)];
+      console.log(`Random Pick: ${randomArr}`);
+      document.getElementById('random').innerHTML = `Random Pick: ${randomArr}`;
+
+      // split the computer's choice into an array
+      var array = randomArr.split("");
+      console.log(`Array: ${array}`);
+      document.getElementById('array').innerHTML = `Array: ${array}`;
 
       // Create blank spaces based on length of array
       var answerDisplay = function() {
@@ -73,7 +83,6 @@
         // }
     };
     
-
     </script>
 
   </body>
