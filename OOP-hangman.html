@@ -47,6 +47,7 @@ var globalVar = {
     mainArr: ['pikachu', 'charmander', 'bulbasaur', 'squirtle'],
     blankArr: [],
     nameArr: [],
+    correctArr: [],
     wrongArr: [],
     bool: false,
     // score
@@ -64,11 +65,11 @@ var randomize = function () {
     document.getElementById('random').innerHTML = `Random Pick: ${randomArr}`;
 
     // split the computer's choice into an array
-    var nameArray = randomArr.split("");
-    console.log(`nameArray: ${nameArray}`);
-    document.getElementById('array').innerHTML = `Array: ${nameArray}`;
+    globalVar.nameArr = randomArr.split("");
+    console.log(`nameArray: ${globalVar.nameArr}`);
+    document.getElementById('array').innerHTML = `Array: ${globalVar.nameArr}`;
     // Create blank spaces based on length of array
-    for (var i = 0; i < nameArray.length; i++) {
+    for (var i = 0; i < globalVar.nameArr.length; i++) {
         globalVar.blankArr.push("_");
         console.log(`Blanks: ${globalVar.blankArr}`); // Testing via Console.Log
     }
@@ -81,6 +82,16 @@ var showHtml = function () {
 
 }; // close showHtml
 
+var check = function(a) {
+    console.log('check(a) - executed');
+    globalVar.nameArr.forEach(function(nameItem) {
+        if (a === nameItem ) {
+            console.log(`${a} MATCHES ${nameItem}`);
+            globalVar.blankArr = a;
+            console.log(`${globalVar.blankArr}`);
+        }
+    }); // close foreach
+}; // close check
 
 // EXECUTION
 console.log(`=== Global ===`);
@@ -95,7 +106,7 @@ document.onkeyup = function(event) {
     console.log(`\n`);
     userInput = event.key;
     console.log(`[Button Pressed] onkeyup userInput: ${userInput}`);
-
+    check(userInput);
     // randomize();
     // console.log('randomize() - executed');
 }; // end onkeyup
