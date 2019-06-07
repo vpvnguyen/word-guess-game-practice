@@ -32,20 +32,33 @@
 <!-- Game Logic -->
 <script type="text/javascript">
 
+// OOP example
+var person = {
+  firstName: "John",
+  lastName : "Doe",
+  id       : 5566,
+  fullName : function() {
+    return this.firstName + " " + this.lastName;
+  }
+};
+
 // create global variables
 var globalVar = {
-    mainArr: ['pikachu', 'charmander', 'bulbasaur', 'squirtle', 'mewtwo'],
+    mainArr: ['pikachu', 'charmander', 'bulbasaur', 'squirtle'],
     blankArr: [],
-    correctArr: [],
+    nameArr: [],
     wrongArr: [],
     bool: false,
     // score
     trys: 12,
     win: 0,
     lose: 0,
-}
+} // close globalVar
 
+// random item from mainArr and push out blank spaces
 var randomize = function () {
+    console.log(`ramdomize() - executed;`);
+
     // pick a random pokemon an split the chracters into an array
     var randomArr = globalVar.mainArr[Math.floor(Math.random() * globalVar.mainArr.length)];
     document.getElementById('random').innerHTML = `Random Pick: ${randomArr}`;
@@ -53,23 +66,38 @@ var randomize = function () {
     // split the computer's choice into an array
     var nameArray = randomArr.split("");
     console.log(`nameArray: ${nameArray}`);
-    document.getElementById('array').innerHTML = `Array: ${array}`;
+    document.getElementById('array').innerHTML = `Array: ${nameArray}`;
+    // Create blank spaces based on length of array
+    for (var i = 0; i < nameArray.length; i++) {
+        globalVar.blankArr.push("_");
+        console.log(`Blanks: ${globalVar.blankArr}`); // Testing via Console.Log
+    }
 }; // close randomize
 
+// affect the dom
+var showHtml = function () {
+    console.log(`showHtml() - executed`);
+    document.getElementById("answer").innerHTML = globalVar.blankArr.join(" ");
+
+}; // close showHtml
+
+
+// EXECUTION
 console.log(`=== Global ===`);
-var accessMain = globalVar.mainArr;
-var isFalse = globalVar.bool;
-console.log(accessMain);
-console.log(`isFalse: ${isFalse}`);
+console.log(globalVar.mainArr);
+console.log(globalVar.bool);
 console.log(`=== end Global ===`);
+
+randomize();
+showHtml();
 
 document.onkeyup = function(event) {
     console.log(`\n`);
     userInput = event.key;
     console.log(`[Button Pressed] onkeyup userInput: ${userInput}`);
-    randomize();
-    console.log('randomize() - executed');
 
+    // randomize();
+    // console.log('randomize() - executed');
 }; // end onkeyup
     
     // // set global variables outside of functions to be called upon
