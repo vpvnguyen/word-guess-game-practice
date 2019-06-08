@@ -81,15 +81,14 @@ var showHtml = function () {
 
 }; // close showHtml
 
+// create a function to check if user's input matches an item in nameArr
 var check = function(a) {
     console.log('check(a) - executed');
     console.log(nameArr);
     console.log(blankArr);
     for (var i = 0; i < nameArr.length; i++) {
-        if (a === nameArr[i] && nameArr[i] !== -1 && (!blankArr[i].includes(a))) {
-
-
-            // nameArr.indexOf(a);
+        // user input = item in nameArr, it is not out of range
+        if (a === nameArr[i] && (!blankArr[i].includes(a))) {
             blankArr[i] = a;
             console.log(`match!`);
             console.log(`a = ${a} | nameArr[i] = ${nameArr[i]}`);
