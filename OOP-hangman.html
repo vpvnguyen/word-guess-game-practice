@@ -43,60 +43,65 @@ var person = {
 };
 
 // create global variables
-var globalVar = {
-    mainArr: ['pikachu', 'charmander', 'bulbasaur', 'squirtle'],
-    blankArr: [],
-    nameArr: [],
-    correctArr: [],
-    wrongArr: [],
-    bool: false,
+
+var mainArr = ['pikachu', 'charmander', 'bulbasaur', 'squirtle'];
+var blankArr =  [];
+var nameArr = [];
+var correctArr = [];
+var wrongArr = [];
+var bool = false;
     // score
-    trys: 12,
-    win: 0,
-    lose: 0,
-} // close globalVar
+var trys = 12;
+var win = 0;
+var lose = 0;
 
 // random item from mainArr and push out blank spaces
 var randomize = function () {
     console.log(`ramdomize() - executed;`);
 
     // pick a random pokemon an split the chracters into an array
-    var randomArr = globalVar.mainArr[Math.floor(Math.random() * globalVar.mainArr.length)];
+    var randomArr = mainArr[Math.floor(Math.random() * mainArr.length)];
     document.getElementById('random').innerHTML = `Random Pick: ${randomArr}`;
 
     // split the computer's choice into an array
-    globalVar.nameArr = randomArr.split("");
-    console.log(`nameArray: ${globalVar.nameArr}`);
-    document.getElementById('array').innerHTML = `Array: ${globalVar.nameArr}`;
+    nameArr = randomArr.split("");
+    console.log(`nameArray: ${nameArr}`);
+    document.getElementById('array').innerHTML = `Array: ${nameArr}`;
     // Create blank spaces based on length of array
-    for (var i = 0; i < globalVar.nameArr.length; i++) {
-        globalVar.blankArr.push("_");
-        console.log(`Blanks: ${globalVar.blankArr}`); // Testing via Console.Log
+    for (var i = 0; i < nameArr.length; i++) {
+        blankArr.push("_");
+        console.log(`Blanks: ${blankArr}`); // Testing via Console.Log
     }
 }; // close randomize
 
 // affect the dom
 var showHtml = function () {
     console.log(`showHtml() - executed`);
-    document.getElementById("answer").innerHTML = globalVar.blankArr.join(" ");
+    document.getElementById("answer").innerHTML = blankArr.join(" ");
 
 }; // close showHtml
 
 var check = function(a) {
     console.log('check(a) - executed');
-    globalVar.nameArr.forEach(function(nameItem) {
-        if (a === nameItem ) {
-            console.log(`${a} MATCHES ${nameItem}`);
-            globalVar.blankArr = a;
-            console.log(`${globalVar.blankArr}`);
+    console.log(nameArr);
+    console.log(blankArr);
+    for (var i = 0; i < nameArr.length; i++) {
+        if (a === nameArr[i] && nameArr[i] !== -1 && (!blankArr[i].includes(a))) {
+
+
+            // nameArr.indexOf(a);
+            blankArr[i] = a;
+            console.log(`match!`);
+            console.log(`a = ${a} | nameArr[i] = ${nameArr[i]}`);
+            console.log(`blankArr: ${blankArr}`);
         }
-    }); // close foreach
+    }
 }; // close check
 
 // EXECUTION
 console.log(`=== Global ===`);
-console.log(globalVar.mainArr);
-console.log(globalVar.bool);
+console.log(mainArr);
+console.log(bool);
 console.log(`=== end Global ===`);
 
 randomize();
@@ -107,6 +112,8 @@ document.onkeyup = function(event) {
     userInput = event.key;
     console.log(`[Button Pressed] onkeyup userInput: ${userInput}`);
     check(userInput);
+
+
     // randomize();
     // console.log('randomize() - executed');
 }; // end onkeyup
