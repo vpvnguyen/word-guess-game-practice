@@ -31,54 +31,62 @@
 <!-- Game Logic -->
 <script type="text/javascript">
 
-// create global variables
+// array of possible choices
 var mainArr = ['Bulbasaur','Ivysaur','Venusaur','Charmander','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachu','Raichu','Sandshrew','Sandslash','Nidoran','Nidorina','Nidoqueen','Nidoran','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch\'d','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr. Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eevee','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew'];
 
 // score
 var wins = 0;
 var loses = 0;
+
+// set condition when user input matches the answer
 var bool = false;
 
-// variables to be changed
+// create variables to be changed:
+// blank spaces of the answer
+// store the correct answer
+// wrong letters guessed
+// amount of trys left
 var blankArr =  [];
 var answer = [];
 var wrongArr = [];
 var trys = 12;
 
-
-// random item from mainArr and push out blank spaces
-var randomize = function () {
+// pick a random possible choice and push out it's character's blank spaces
+var randomize = function() {
     console.log(`ramdomize() - executed;`);
-
-    // pick a random pokemon an split the chracters into an answer
     var randomArr = mainArr[Math.floor(Math.random() * mainArr.length)];
-    // split the computer's choice into an answer
     var randomArrUpper = randomArr.toUpperCase();
-
     answer = randomArrUpper.split("");
     console.log(`Random Pick: ${answer}`);
     document.getElementById('answer').innerHTML = `answer: ${answer}`;
-    // Create blank spaces based on length of answer
+    // Create blank spaces based on length of the answer
     for (var i = 0; i < answer.length; i++) {
         blankArr.push("_");
-        console.log(`Blanks: ${blankArr}`); // Testing via Console.Log
+        console.log(`Blanks: ${blankArr}`);
     }
-}; // close randomize
+}; // end randomize
 
-// create a function to check if user's input matches an item in answer
+// check to see if user's input matches an answer
+// if user's input matches, replace the blank space(s) with the correct letter(s)
+// if user's input does not match, store input in wrong array and lose a try 
 var check = function(a) {
+    // set condition to choose what happens when the input matches/mismatches
     bool = false;
     console.log('check(a) - executed');
+    // loop through the answer to see if input matches
     for (var i = 0; i < answer.length; i++) {
-        // user input = item in answer, user input is not in blankArr #includes to check
+        // if input matches an answer and is not included in the blank array
         if (a === answer[i] && (!blankArr[i].includes(a))) {
             console.log(`=== match! ===`);
             blankArr[i] = a;
             console.log(`a = ${a} | answer[i] = ${answer[i]}`);
             console.log(`blankArr: ${blankArr}`);
+            // set bool to true to skip the rest
             bool = true;
         }  
     }
+    // set bool to false to run if item did not match; if input is not in wrong array and the input is not the correct answer
+    // store input into wrong array and lose a try
     if (bool === false && wrongArr.indexOf(a) === -1 && answer.indexOf(a) === -1) {
         console.log('== doesnt match! ==')
         console.log(`a = ${a} | answer[i] = ${answer[i]}`);
@@ -90,7 +98,7 @@ var check = function(a) {
 }; // close check
 
 // affect the dom
-var showHtml = function () {
+var showHtml = function() {
     console.log(`showHtml() - executed`);
     document.getElementById("answer").innerHTML = blankArr.join(" ");
     document.getElementById('wrong').innerHTML = `Wrong Letters: ${wrongArr}`;
@@ -100,8 +108,10 @@ var showHtml = function () {
 
 }; // close showHtml
 
-// win or lose
-var next = function () {
+// advance to next round when user wins or loses
+// reset global variables except for score
+var next = function() {
+    // lose if trys = 0
     if (trys === 0) {
         loses++;
         console.log(`loses: ${loses}`);
@@ -113,7 +123,7 @@ var next = function () {
         randomize();
         showHtml();
     }
-    // wins - if answer = blankarr
+    // wins if answer matches blankarr
     if (answer.toString() === blankArr.toString()) {
         wins++;
         showHtml();
@@ -126,10 +136,9 @@ var next = function () {
     }
 }
 
-// EXECUTION
+// game execution
 randomize();
 showHtml();
-
 document.onkeyup = function(event) {
     console.log(`\n`);
     var keyPress = event.key;
@@ -139,7 +148,6 @@ document.onkeyup = function(event) {
     check(userInput);
     showHtml();
     next();
-
 }; // end onkeyup
 
 </script>
