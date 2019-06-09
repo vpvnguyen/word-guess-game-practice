@@ -49,7 +49,7 @@ var answer = [];
 var correctArr = [];
 var wrongArr = [];
 var bool = false;
-    // score
+// score
 var trys = 12;
 var wins = 0;
 var lose = 0;
@@ -88,13 +88,14 @@ var check = function(a) {
             console.log(`blankArr: ${blankArr}`);
             bool = true;
         }  
-
     }
     if (bool === false && wrongArr.indexOf(a) === -1 && answer.indexOf(a) === -1) {
         console.log('== doesnt match! ==')
         console.log(`a = ${a} | answer[i] = ${answer[i]}`);
         wrongArr.push(a);
         console.log(`wrongArr: ${wrongArr}`);
+        trys--;
+        console.log(`trys left: ${trys}`);
     }
 }; // close check
 
@@ -104,10 +105,23 @@ var showHtml = function () {
     console.log(`showHtml() - executed`);
     document.getElementById("answer").innerHTML = blankArr.join(" ");
 
+    // <div id="random"></div>
+    //         <div id="array"></div>
+    //         <div id="answer"></div>
+    //         <div id="wrong"></div>
+    //         <div id="trys"></div>
+    //         <div id="wins"></div>
+
 }; // close showHtml
 
 // win or lose
 var next = function () {
+    if (trys === 0) {
+        lose++;
+        console.log(`loses: ${lose}`);
+        alert('next round');
+    }
+    // if ()
     // wins - if answer = blankarr
     // trys - if trys = 0, lose a point
     // lose--
@@ -128,6 +142,7 @@ document.onkeyup = function(event) {
     console.log(`[Button Pressed] onkeyup userInput: ${userInput}`);
     check(userInput);
     showHtml();
+    next();
 
 }; // end onkeyup
     
