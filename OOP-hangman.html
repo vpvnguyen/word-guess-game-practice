@@ -19,12 +19,11 @@
     <div id="start-game">Start Game</div>
     <div class="row">
         <div class="col-sm-8">
-            <div id="random"></div>
-            <div id="array"></div>
             <div id="answer"></div>
             <div id="wrong"></div>
             <div id="trys"></div>
             <div id="wins"></div>
+            <div id="loses"></div>
         </div>
     </div>
 </div>
@@ -32,41 +31,34 @@
 <!-- Game Logic -->
 <script type="text/javascript">
 
-// OOP example
-var person = {
-  firstName: "John",
-  lastName : "Doe",
-  id       : 5566,
-  fullName : function() {
-    return this.firstName + " " + this.lastName;
-  }
-};
-
 // create global variables
-var mainArr = ['pikachu', 'charmander', 'bulbasaur', 'squirtle'];
+var mainArr = ['Bulbasaur','Ivysaur','Venusaur','Charmander','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachu','Raichu','Sandshrew','Sandslash','Nidoran','Nidorina','Nidoqueen','Nidoran','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch\'d','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr. Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eevee','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew'];
+
+// score
+var wins = 0;
+var loses = 0;
+var bool = false;
+
+// variables to be changed
 var blankArr =  [];
 var answer = [];
-var correctArr = [];
 var wrongArr = [];
-var bool = false;
-// score
 var trys = 12;
-var wins = 0;
-var lose = 0;
+
 
 // random item from mainArr and push out blank spaces
 var randomize = function () {
     console.log(`ramdomize() - executed;`);
 
-    // pick a random pokemon an split the chracters into an array
+    // pick a random pokemon an split the chracters into an answer
     var randomArr = mainArr[Math.floor(Math.random() * mainArr.length)];
-    document.getElementById('random').innerHTML = `Random Pick: ${randomArr}`;
+    // split the computer's choice into an answer
+    var randomArrUpper = randomArr.toUpperCase();
 
-    // split the computer's choice into an array
-    answer = randomArr.split("");
-    console.log(`answeray: ${answer}`);
-    document.getElementById('array').innerHTML = `Array: ${answer}`;
-    // Create blank spaces based on length of array
+    answer = randomArrUpper.split("");
+    console.log(`Random Pick: ${answer}`);
+    document.getElementById('answer').innerHTML = `answer: ${answer}`;
+    // Create blank spaces based on length of answer
     for (var i = 0; i < answer.length; i++) {
         blankArr.push("_");
         console.log(`Blanks: ${blankArr}`); // Testing via Console.Log
@@ -77,8 +69,6 @@ var randomize = function () {
 var check = function(a) {
     bool = false;
     console.log('check(a) - executed');
-    console.log(answer);
-    console.log(blankArr);
     for (var i = 0; i < answer.length; i++) {
         // user input = item in answer, user input is not in blankArr #includes to check
         if (a === answer[i] && (!blankArr[i].includes(a))) {
@@ -99,204 +89,58 @@ var check = function(a) {
     }
 }; // close check
 
-
 // affect the dom
 var showHtml = function () {
     console.log(`showHtml() - executed`);
     document.getElementById("answer").innerHTML = blankArr.join(" ");
-
-    // <div id="random"></div>
-    //         <div id="array"></div>
-    //         <div id="answer"></div>
-    //         <div id="wrong"></div>
-    //         <div id="trys"></div>
-    //         <div id="wins"></div>
+    document.getElementById('wrong').innerHTML = `Wrong Letters: ${wrongArr}`;
+    document.getElementById('trys').innerHTML = `Trys: ${trys}`;
+    document.getElementById('wins').innerHTML = `Wins: ${wins}`;
+    document.getElementById('loses').innerHTML = `Loses: ${loses}`;
 
 }; // close showHtml
 
 // win or lose
 var next = function () {
     if (trys === 0) {
-        lose++;
-        console.log(`loses: ${lose}`);
-        alert('next round');
+        loses++;
+        console.log(`loses: ${loses}`);
+        showHtml();
+        blankArr =  [];
+        answer = [];
+        wrongArr = [];
+        trys = 12;
+        randomize();
+        showHtml();
     }
-    // if ()
     // wins - if answer = blankarr
-    // trys - if trys = 0, lose a point
-    // lose--
+    if (answer.toString() === blankArr.toString()) {
+        wins++;
+        showHtml();
+        blankArr =  [];
+        answer = [];
+        wrongArr = [];
+        trys = 12;
+        randomize();
+        showHtml();
+    }
 }
 
-
 // EXECUTION
-console.log(`=== Global ===`);
-console.log(mainArr);
-console.log(bool);
-console.log(`=== end Global ===`);
-
 randomize();
+showHtml();
 
 document.onkeyup = function(event) {
     console.log(`\n`);
-    userInput = event.key;
+    var keyPress = event.key;
+    var userInput = keyPress.toUpperCase();
+    console.log(userInput)
     console.log(`[Button Pressed] onkeyup userInput: ${userInput}`);
     check(userInput);
     showHtml();
     next();
 
 }; // end onkeyup
-    
-    // // set global variables outside of functions to be called upon
-    // // list of possible choices to choose from
-    // var mainArr = ['pikachu', 'charmander', 'bulbasaur', 'squirtle', 'mewtwo'];
-    // // ontain underscore spaces until user correctly guesses the letter 
-    // var blankArr = [];
-    // // contain user's correct guesses
-    // var correctArr = [];
-    // // contain user's incorrect guesses
-    // var wrongArr = [];
-    // // value of true / false to determine whether userinput matches item in array
-    // var bool = false;
-    // // score
-    // var trys = 12;
-    // var win = 0;
-    // var lose = 0;
-
-    // var userInput = '';
-
-    // function saveUserInput(event) {
-    //     // var userInput = event.key;
-    //     console.log(`\nUserInput: ${userInput} | ${typeof userInput}`);
-    //     console.log(`Event.key: ${event.key} | ${typeof event.key}`);
-    //     checker();
-    //     console.log('saveUserInputer => checker');
-    //     // document.getElementById("answer").innerHTML = blankArr.join(" ");
-
-
-    // }; // end saveUserInput
-
-    // var reset = function () {
-    //     // randomize choices and push out blanks
-    //     var randomArr = mainArr[Math.floor(Math.random() * mainArr.length)];
-    //     console.log(`Random Pick: ${randomArr}`);
-    //     document.getElementById('random').innerHTML = `Random Pick: ${randomArr}`;
-
-    //     // split the computer's choice into an array
-    //     var array = randomArr.split("");
-    //     console.log(`Array: ${array}`);
-    //     document.getElementById('array').innerHTML = `Array: ${array}`;
-
-    //     // Create blank spaces based on length of array
-    //     for (var i = 0; i < array.length; i++) {
-    //         blankArr.push("_");
-    //         console.log(`Blanks: ${blankArr}`); // Testing via Console.Log
-    //     }
-    // }; // end of reset
-
-    // // create score system to track win and lose
-    // var scoreSystem = function () {
-    //     if (trys === 0) {
-    //         alert(`Trys: ${trys}`);
-    //     }
-    //     if (array.toString() == correctArr.toString()) { // use toString because .length will only match the total number of items to the last item in array
-    //         win++;
-    //         alert(`Win: length match = ${array.toString()} | ${correctArr.toString()}`);
-    //     }
-    // }; // end of score system
-
-    // var checker = function() {
-    //     for (var i = 0; i < array.length; i++) {
-    //         if (userInput === array[i]){
-    //             bool = true;
-    //             console.log('true')
-    //         }
-    //         // if true, replace blank space with user input, add input to correct array, check score
-    //         if (bool === true) {
-    //             for (var i = 0; i < array.length; i++) {
-    //                 console.log(array[i] + userInput);
-    //                 if (array[i] === userInput && i >= 0) { // in case there are 2 letters
-    //                     blankArr[i] = userInput;
-    //                     correctArr[i] = userInput; // so that blanks dont count towards win; wip
-    //                     console.log(`correctArr = ${correctArr} | blankArr = ${blankArr}`);
-    //                     document.getElementById("answer").innerHTML = blankArr.join(" ");
-    //                     console.log(array.length + ' ' + correctArr.length)
-
-    //                 }
-    //             }
-    //         // if false and user input is not in array, lose a try, put wrong input into array
-    //         } else if (wrongArr.indexOf(userInput) === -1 && trys > 0) {
-    //             wrongArr.push(userInput); // put userinput into wrong guess array
-    //             trys--; // lose a try
-    //             document.getElementById('wrong').innerHTML = `wrongArr: ${wrongArr}`; // html wrong guesses array
-    //             document.getElementById('trys').innerHTML = `Trys Left: ${trys}`; // html trys left
-    //             console.log(`wrongArr = ${wrongArr}`);
-    //             console.log(`trys left = ${trys}`);
-    //         };
-    //         scoreSystem();
-    //     }
-
-    // }; // end of checker
-
-
-    // reset();
-    // document.onkeyup = function() {
-    //     var userInput = event.key;
-    //     checker();
-    //     console.log(array.length + ' ' + correctArr.length);
-    //     console.log(correctArr);
-
-    // };
-
-
-
-
-
-    // // // IF DOCUMENT.ONKEY UP IS INSIDE A FUNCTION, FOREACH STOPS WORKING
-    // // // Game logic
-    // // // when user presses a key, do the following
-    // // document.onkeyup = function (game) {
-    // //     var userInput = game.key;
-    // //     console.log(`\nUserInput: ${userInput} | ${typeof userInput}`);
-    // //     var bool = false; // drop in variable to control whether true or false
-    // //     // write out to blanks
-    // //     document.getElementById("answer").innerHTML = blankArr.join(" ");
-        
-    // //     // NOT A FUNCTION IF DOCUMENT.ONKEYUP IS INSIDE A FUNCTION? **
-    // //     // loop through choices and determine if true or false
-    // //     array.forEach(function (item) {
-    // //         if (userInput === item) {
-    // //             bool = true;
-    // //             console.log(`array.item: ${item} - MATCH!`);
-    // //         }
-    // //     });
-
-    // //     // THIS SHOULD BE A FUNCTION CHECKING TRUE OR FALSE OF USER INPUT / GUESS **
-    // //     // if true, replace blank space with user input, add input to correct array, check score
-    // //     if (bool === true) {
-    // //         for (var i = 0; i < array.length; i++) {
-    // //             console.log(array[i] + userInput);
-    // //             if (array[i] === userInput && i >= 0) { // in case there are 2 letters
-    // //                 blankArr[i] = userInput;
-    // //                 correctArr[i] = userInput; // so that blanks dont count towards win; wip
-    // //                 console.log(`correctArr = ${correctArr} | blankArr = ${blankArr}`);
-    // //                 document.getElementById("answer").innerHTML = blankArr.join(" ");
-    // //                 console.log(array.length + ' ' + correctArr.length)
-
-    // //             }
-    // //         }
-
-    // //     // if false and user input is not in array, lose a try, put wrong input into array
-    // //     } else if (wrongArr.indexOf(userInput) === -1 && trys > 0) {
-    // //         wrongArr.push(userInput); // put userinput into wrong guess array
-    // //         trys--; // lose a try
-    // //         document.getElementById('wrong').innerHTML = `wrongArr: ${wrongArr}`; // html wrong guesses array
-    // //         document.getElementById('trys').innerHTML = `Trys Left: ${trys}`; // html trys left
-    // //         console.log(`wrongArr = ${wrongArr}`);
-    // //         console.log(`trys left = ${trys}`);
-    // //     };
-    // //     scoreSystem();
-    // // };
-
 
 </script>
 </body>
