@@ -24,7 +24,7 @@
             <div id="answer"></div>
             <div id="wrong"></div>
             <div id="trys"></div>
-            <div id="win"></div>
+            <div id="wins"></div>
         </div>
     </div>
 </div>
@@ -45,13 +45,13 @@ var person = {
 // create global variables
 var mainArr = ['pikachu', 'charmander', 'bulbasaur', 'squirtle'];
 var blankArr =  [];
-var nameArr = [];
+var answer = [];
 var correctArr = [];
 var wrongArr = [];
 var bool = false;
     // score
 var trys = 12;
-var win = 0;
+var wins = 0;
 var lose = 0;
 
 // random item from mainArr and push out blank spaces
@@ -63,15 +63,41 @@ var randomize = function () {
     document.getElementById('random').innerHTML = `Random Pick: ${randomArr}`;
 
     // split the computer's choice into an array
-    nameArr = randomArr.split("");
-    console.log(`nameArray: ${nameArr}`);
-    document.getElementById('array').innerHTML = `Array: ${nameArr}`;
+    answer = randomArr.split("");
+    console.log(`answeray: ${answer}`);
+    document.getElementById('array').innerHTML = `Array: ${answer}`;
     // Create blank spaces based on length of array
-    for (var i = 0; i < nameArr.length; i++) {
+    for (var i = 0; i < answer.length; i++) {
         blankArr.push("_");
         console.log(`Blanks: ${blankArr}`); // Testing via Console.Log
     }
 }; // close randomize
+
+// create a function to check if user's input matches an item in answer
+var check = function(a) {
+    bool = false;
+    console.log('check(a) - executed');
+    console.log(answer);
+    console.log(blankArr);
+    for (var i = 0; i < answer.length; i++) {
+        // user input = item in answer, user input is not in blankArr #includes to check
+        if (a === answer[i] && (!blankArr[i].includes(a))) {
+            console.log(`=== match! ===`);
+            blankArr[i] = a;
+            console.log(`a = ${a} | answer[i] = ${answer[i]}`);
+            console.log(`blankArr: ${blankArr}`);
+            bool = true;
+        }  
+
+    }
+    if (bool === false && wrongArr.indexOf(a) === -1 && answer.indexOf(a) === -1) {
+        console.log('== doesnt match! ==')
+        console.log(`a = ${a} | answer[i] = ${answer[i]}`);
+        wrongArr.push(a);
+        console.log(`wrongArr: ${wrongArr}`);
+    }
+}; // close check
+
 
 // affect the dom
 var showHtml = function () {
@@ -80,29 +106,13 @@ var showHtml = function () {
 
 }; // close showHtml
 
-// create a function to check if user's input matches an item in nameArr
-var check = function(a) {
-    console.log('check(a) - executed');
-    console.log(nameArr);
-    console.log(blankArr);
-    for (var i = 0; i < nameArr.length; i++) {
-        // user input = item in nameArr, user input is not in blankArr #includes to check
-        if (a === nameArr[i] && (!blankArr[i].includes(a))) {
-            console.log(`=== match! ===`);
-            blankArr[i] = a;
-            console.log(`a = ${a} | nameArr[i] = ${nameArr[i]}`);
-            console.log(`blankArr: ${blankArr}`);
-            bool = true;
-        }  
+// win or lose
+var next = function () {
+    // wins - if answer = blankarr
+    // trys - if trys = 0, lose a point
+    // lose--
+}
 
-    }
-    if (bool === false && wrongArr.indexOf(a) === -1) {
-        console.log('== doesnt match! ==')
-        console.log(`a = ${a} | nameArr[i] = ${nameArr[i]}`);
-        wrongArr.push(a);
-        console.log(`wrongArr: ${wrongArr}`);
-    }
-}; // close check
 
 // EXECUTION
 console.log(`=== Global ===`);
