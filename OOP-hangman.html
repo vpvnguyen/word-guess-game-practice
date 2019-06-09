@@ -43,7 +43,6 @@ var person = {
 };
 
 // create global variables
-
 var mainArr = ['pikachu', 'charmander', 'bulbasaur', 'squirtle'];
 var blankArr =  [];
 var nameArr = [];
@@ -87,13 +86,21 @@ var check = function(a) {
     console.log(nameArr);
     console.log(blankArr);
     for (var i = 0; i < nameArr.length; i++) {
-        // user input = item in nameArr, it is not out of range
+        // user input = item in nameArr, user input is not in blankArr #includes to check
         if (a === nameArr[i] && (!blankArr[i].includes(a))) {
+            console.log(`=== match! ===`);
             blankArr[i] = a;
-            console.log(`match!`);
             console.log(`a = ${a} | nameArr[i] = ${nameArr[i]}`);
             console.log(`blankArr: ${blankArr}`);
-        }
+            bool = true;
+        }  
+
+    }
+    if (bool === false && wrongArr.indexOf(a) === -1) {
+        console.log('== doesnt match! ==')
+        console.log(`a = ${a} | nameArr[i] = ${nameArr[i]}`);
+        wrongArr.push(a);
+        console.log(`wrongArr: ${wrongArr}`);
     }
 }; // close check
 
@@ -104,17 +111,14 @@ console.log(bool);
 console.log(`=== end Global ===`);
 
 randomize();
-showHtml();
 
 document.onkeyup = function(event) {
     console.log(`\n`);
     userInput = event.key;
     console.log(`[Button Pressed] onkeyup userInput: ${userInput}`);
     check(userInput);
+    showHtml();
 
-
-    // randomize();
-    // console.log('randomize() - executed');
 }; // end onkeyup
     
     // // set global variables outside of functions to be called upon
